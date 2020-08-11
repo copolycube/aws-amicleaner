@@ -41,7 +41,7 @@ def test_deletion():
 
     # create amis
     images = []
-    for i in range(5):
+    for _ in range(5):
         image = ec2.create_image(
             InstanceId=instance.get("InstanceId"),
             Name="test-ami"
@@ -83,10 +83,7 @@ def test_deletion_ami_min_days():
     second_ami.creation_date = "2017-11-04T01:35:31.000Z"
 
     # constructing dicts
-    amis_dict = dict()
-    amis_dict[first_ami.id] = first_ami
-    amis_dict[second_ami.id] = second_ami
-
+    amis_dict = {first_ami.id: first_ami, second_ami.id: second_ami}
     parser = parse_args(
         [
             '--keep-previous', '0',
@@ -140,11 +137,8 @@ def test_fetch_candidates():
     second_instance.launch_time = datetime.now()
 
     # constructing dicts
-    amis_dict = dict()
-    amis_dict[first_ami.id] = first_ami
-    amis_dict[second_ami.id] = second_ami
-
-    instances_dict = dict()
+    amis_dict = {first_ami.id: first_ami, second_ami.id: second_ami}
+    instances_dict = {}
     instances_dict[first_instance.image_id] = instances_dict
     instances_dict[second_instance.image_id] = second_instance
 

@@ -24,7 +24,7 @@ class Fetcher(object):
 
         """ Retrieve from your aws account your custom AMIs"""
 
-        available_amis = dict()
+        available_amis = {}
 
         my_custom_images = self.ec2.describe_images(Owners=['self'])
         for image_json in my_custom_images.get('Images'):
@@ -53,10 +53,8 @@ class Fetcher(object):
         resp = self.asg.describe_launch_configurations(
             LaunchConfigurationNames=unused_lcs
         )
-        amis = [lc.get("ImageId")
+        return [lc.get("ImageId")
                 for lc in resp.get("LaunchConfigurations", [])]
-
-        return amis
 
     def fetch_zeroed_asg(self):
 
@@ -73,10 +71,8 @@ class Fetcher(object):
             LaunchConfigurationNames=zeroed_lcs
         )
 
-        amis = [lc.get("ImageId", "")
+        return [lc.get("ImageId", "")
                 for lc in resp.get("LaunchConfigurations", [])]
-
-        return amis
 
     def fetch_instances(self):
 
@@ -96,8 +92,6 @@ class Fetcher(object):
                 }
             ]
         )
-        amis = [i.get("ImageId", None)
+        return [i.get("ImageId", None)
                 for r in resp.get("Reservations", [])
                 for i in r.get("Instances", [])]
-
-        return amis
