@@ -187,7 +187,7 @@ class AMICleaner(object):
         if not mapping_strategy:
             return candidates_amis
 
-        candidates_map = dict()
+        candidates_map = {}
         for ami in candidates_amis:
             # case : grouping on name
             if mapping_strategy.get("key") == "name":
@@ -246,9 +246,7 @@ class AMICleaner(object):
         time and rotation_strategy param
         """
 
-        result_amis = []
-        result_amis.extend(mapped_candidates_ami)
-
+        result_amis = list(mapped_candidates_ami)
         if ami_min_days > 0:
             for ami in mapped_candidates_ami:
                 f_date = datetime.strptime(ami.creation_date, '%Y-%m-%dT%H:%M:%S.%fZ')

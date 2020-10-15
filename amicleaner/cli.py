@@ -53,11 +53,10 @@ class App(object):
             excluded_amis += f.fetch_zeroed_asg()
             excluded_amis += f.fetch_instances()
 
-        candidates = [v
+        return [v
                       for k, v
                       in available_amis.items()
                       if k not in excluded_amis]
-        return candidates
 
     def prepare_candidates(self, candidates_amis=None):
 
@@ -79,7 +78,7 @@ class App(object):
             return None
 
         candidates = []
-        report = dict()
+        report = {}
 
         for group_name, amis in mapped_amis.items():
             group_name = group_name or ""
